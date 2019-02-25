@@ -116,6 +116,8 @@ class qtype_sassessment_renderer extends qtype_renderer {
                 $sampleResponses .= html_writer::tag('div', $question->format_text($q->answer, $q->answerformat,
                     $qa, 'question', 'answer', $q->id)); // , array('class' => 'qtext')
                 $sampleResponses .= html_writer::end_tag('li');
+
+                break;
             }
             $sampleResponses .= html_writer::end_tag('ul');
         }
@@ -399,7 +401,7 @@ require(["jquery"], function(min) {
             $table->data = array();
 
             foreach ($anl as $k => $v)
-                $table->data[] = array($k, $v);
+                $table->data[] = array(get_string($k, 'qtype_sassessment'), $v);
 
             $result .= html_writer::table($table);
         }
