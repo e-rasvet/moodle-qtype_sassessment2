@@ -29,6 +29,6 @@ defined('MOODLE_INTERNAL') || die();
 $plugin->component = 'qtype_sassessment';
 $plugin->version   = 2019021800;
 
-$plugin->requires  = 2018051700;
+$plugin->requires  = 2017111300; // Moodle 3.4
 
 $plugin->maturity  = MATURITY_ALPHA;
