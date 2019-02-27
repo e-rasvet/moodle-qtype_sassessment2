@@ -162,11 +162,16 @@ class qtype_sassessment_renderer extends qtype_renderer {
             }
 
             if (!$options->readonly) {
+                /*
+                 * No need to show target text
+                 */
+                /*
                 $result .= html_writer::start_tag('div', array('class' => 'ablock form-inline'));
                 $result .= html_writer::tag('label', get_string('targetresponse', 'qtype_sassessment',
                     $sampleResponses . html_writer::tag('span', $input, array('class' => 'answer'))),
                     array('for' => $inputattributes['id'], 'style' => $answerDisplayStatus));
                 $result .= html_writer::end_tag('div');
+                */
             }
         }
 
@@ -381,7 +386,11 @@ require(["jquery"], function(min) {
 
         $result = '';
         $result .= html_writer::start_tag('div', array('class' => 'ablock'));
-        $result .= html_writer::tag('p', get_string('targetresponsee', 'qtype_sassessment') . ": " . $grade['answer']);
+
+        /*
+         * No need to show target response
+         */
+        //$result .= html_writer::tag('p', get_string('targetresponsee', 'qtype_sassessment') . ": " . $grade['answer']);
 
         if ($question->show_transcript == 1) {
             $result .= html_writer::tag('p', get_string('yourresponse', 'qtype_sassessment') . ": " . $ans);
