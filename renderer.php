@@ -331,6 +331,7 @@ require(["jquery"], function(min) {
 require(["jquery"], function(min) {
     $(function() {
         $(".goToVideo").click(function() {
+            $(".goToVideo").attr("style","");
             var $div = $(this).closest(".qtext");
             video = $div.find("video").get(0);
             video.currentTime = $(this).attr("data-value");
