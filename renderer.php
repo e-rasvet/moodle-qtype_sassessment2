@@ -162,13 +162,15 @@ class qtype_sassessment_renderer extends qtype_renderer {
             }
 
             if (!$options->readonly) {
-                /*
-                 * No need to show target text
-                 */
 
-                $result .= html_writer::start_tag('div', array('class' => 'ablock form-inline', 'style' => 'display:none'));
-                $result .= html_writer::tag('label', get_string('targetresponse', 'qtype_sassessment',
-                    $sampleResponses . html_writer::tag('span', $input, array('class' => 'answer'))),
+                $result .= html_writer::start_tag('div', array('class' => 'ablock form-inline'));
+                /*
+                 * Disable target response
+                 */
+/*                $result .= html_writer::tag('label', get_string('targetresponse', 'qtype_sassessment',
+                $sampleResponses . html_writer::tag('span', $input, array('class' => 'answer'))),
+                    array('for' => $inputattributes['id'], 'style' => $answerDisplayStatus)); */
+                $result .= html_writer::tag('label', html_writer::tag('span', $input, array('class' => 'answer')),
                     array('for' => $inputattributes['id'], 'style' => $answerDisplayStatus));
                 $result .= html_writer::end_tag('div');
 
@@ -214,7 +216,7 @@ class qtype_sassessment_renderer extends qtype_renderer {
             $result .= html_writer::end_tag('div');
 
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/recorder.js'));
-            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?1'));
+            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js'));
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/Mp3LameEncoder.min.js'));
         }
         else {
