@@ -383,6 +383,9 @@ require(["jquery"], function(min) {
     }
 
     public function specific_feedback(question_attempt $qa) {
+
+        include_once "finediff.php";
+
         $question = $qa->get_question();
         $ans = $qa->get_last_qt_var('answer');
         $grade = qtype_sassessment_compare_answer($ans, $qa->get_question()->id);
@@ -396,7 +399,16 @@ require(["jquery"], function(min) {
         //$result .= html_writer::tag('p', get_string('targetresponsee', 'qtype_sassessment') . ": " . $grade['answer']);
 
         if ($question->show_transcript == 1) {
-            $result .= html_writer::tag('p', get_string('yourresponse', 'qtype_sassessment') . ": " . $ans);
+            $from_str = preg_replace('/[^A-Za-z0-9 ]/i', '', strtolower($grade['answer']));
+            $to_str = preg_replace('/[^A-Za-z0-9] /i', '', strtolower($ans));
+
+            $diff = new FineDiff($from_str, $to_str, FineDiff::$wordGranularity);
+            $rendered_diff = $diff->renderDiffToHTML();
+
+            $result .= html_writer::tag('p', get_string('yourresponse', 'qtype_sassessment') . ": " . $rendered_diff);
+
+            //$result .= html_writer::tag('style', "del{display:none}ins{color:red;background:#fdd;text-decoration:none}");
+            $result .= html_writer::tag('style', "del{color:red;background:#fdd;text-decoration:none}ins{display:none}");
         }
 
         $result .= html_writer::tag('p', get_string('scoree', 'qtype_sassessment') . ": " . $grade['gradePercent']);
@@ -417,6 +429,7 @@ require(["jquery"], function(min) {
 
             $result .= html_writer::table($table);
         }
+
 
         return $result;
     }
