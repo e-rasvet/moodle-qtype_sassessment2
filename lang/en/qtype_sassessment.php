@@ -62,4 +62,7 @@ $string['hardwordspersent'] = 'Hard words %';
 $string['lexicaldensity'] = 'Lexical density';
 $string['fogindex'] = 'Fog index';
 
+$string['feedback'] = 'Feedback';
+$string['myanswer'] = 'My answer';
+
 

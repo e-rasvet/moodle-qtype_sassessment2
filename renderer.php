@@ -216,7 +216,7 @@ class qtype_sassessment_renderer extends qtype_renderer {
             $result .= html_writer::end_tag('div');
 
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/recorder.js'));
-            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js'));
+            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?5'));
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/Mp3LameEncoder.min.js'));
         }
         else {
@@ -399,15 +399,19 @@ require(["jquery"], function(min) {
         //$result .= html_writer::tag('p', get_string('targetresponsee', 'qtype_sassessment') . ": " . $grade['answer']);
 
         if ($question->show_transcript == 1) {
+            $result .= html_writer::tag('p', get_string('myanswer', 'qtype_sassessment') . ": " . $ans);
+
+            //$result .= html_writer::tag('style', "del{display:none}ins{color:red;background:#fdd;text-decoration:none}");
+        }
+
+        if (!empty($grade['answer']) && !empty($ans)) {
             $from_str = preg_replace('/[^A-Za-z0-9 ]/i', '', strtolower($grade['answer']));
             $to_str = preg_replace('/[^A-Za-z0-9] /i', '', strtolower($ans));
 
             $diff = new FineDiff($from_str, $to_str, FineDiff::$wordGranularity);
             $rendered_diff = $diff->renderDiffToHTML();
 
-            $result .= html_writer::tag('p', get_string('yourresponse', 'qtype_sassessment') . ": " . $rendered_diff);
-
-            //$result .= html_writer::tag('style', "del{display:none}ins{color:red;background:#fdd;text-decoration:none}");
+            $result .= html_writer::tag('p', get_string('feedback', 'qtype_sassessment') . ": " . $rendered_diff);
             $result .= html_writer::tag('style', "del{color:red;background:#fdd;text-decoration:none}ins{display:none}");
         }
 

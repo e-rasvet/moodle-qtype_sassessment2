@@ -82,6 +82,9 @@ function recBtn(ev) {
   var btn = ev.target;
   var id = btn.name;
 
+
+  var final_transcript = '';
+
   if (recStatus[id] === undefined)
     recStatus[id] = null;
 
@@ -101,17 +104,16 @@ function recBtn(ev) {
     recStatus[id].grade = document.getElementById(btn.getAttribute('gradename'));
     recStatus[id].onresult = function (e) {
         var interim_transcript = '';
-        var final_transcript = '';
 
         for (var i = e.resultIndex; i < e.results.length; ++i) {
             if (e.results[i].isFinal) {
                 final_transcript += e.results[i][0].transcript;
                 this.ans.value = final_transcript;
-                this.ansDiv.innerHTML = final_transcript;
+                this.ansDiv.innerHTML = final_transcript; // + ":fin";
             } else {
                 interim_transcript += e.results[i][0].transcript;
                 this.ans.value = interim_transcript;
-                this.ansDiv.innerHTML = interim_transcript;
+                this.ansDiv.innerHTML = final_transcript + interim_transcript; // + ":inter";
             }
         }
 
