@@ -46,7 +46,7 @@ class qtype_sassessment extends question_type {
      * @return array
      */
     public function extra_question_fields() {
-        return array('qtype_sassessment_options', 'show_transcript', 'save_stud_audio', 'show_analysis');
+        return array('qtype_sassessment_options', 'show_transcript', 'save_stud_audio', 'show_analysis', 'speechtotextlang');
     }
 
     public function move_files($questionid, $oldcontextid, $newcontextid) {
@@ -80,18 +80,25 @@ class qtype_sassessment extends question_type {
           if (!$options) {
               $options = new stdClass();
               $options->questionid = $formdata->id;
+              $options->correctfeedback = '';
+              $options->partiallycorrectfeedback = '';
+              $options->incorrectfeedback = '';
               $options->id = $DB->insert_record('qtype_sassessment_options', $options);
           }
 
           $options->show_transcript = (int)$formdata->show_transcript;
           $options->save_stud_audio = (int)$formdata->save_stud_audio;
           $options->show_analysis = (int)$formdata->show_analysis;
+          $options->speechtotextlang = $formdata->speechtotextlang;
 
           $options->fb_type = $formdata->fb_type;
+
+          $options = $this->save_combined_feedback_helper($options, $formdata, $context, true);
 
           $DB->update_record('qtype_sassessment_options', $options);
         }
     }
+
 
     protected function is_answer_empty($questiondata, $key) {
        return html_is_blank($questiondata->answer[$key]['text']) || trim($questiondata->answer[$key]) == '';
@@ -114,6 +121,7 @@ class qtype_sassessment extends question_type {
 
     protected function initialise_question_instance(question_definition $question, $questiondata) {
         parent::initialise_question_instance($question, $questiondata);
+        $this->initialise_combined_feedback($question, $questiondata, true);
         $question->questions = $questiondata->options->answers;
     }
 
@@ -158,6 +166,7 @@ class qtype_sassessment extends question_type {
                 $question->itemsettings[$key]['show_transcript'] = $format->getpath($setxml, array('#', 'show_transcript', 0, '#'), 0);
                 $question->itemsettings[$key]['save_stud_audio'] = $format->getpath($setxml, array('#', 'save_stud_audio', 0, '#'), 0);
                 $question->itemsettings[$key]['show_analysis'] = $format->getpath($setxml, array('#', 'show_analysis', 0, '#'), 0);
+                $question->itemsettings[$key]['speechtotextlang'] = $format->getpath($setxml, array('#', 'speechtotextlang', 0, '#'), 0);
             }
         }
         return $question;
@@ -183,6 +192,7 @@ class qtype_sassessment extends question_type {
             $output .= '        <show_transcript>' . $set->show_transcript . "</show_transcript>\n";
             $output .= '        <save_stud_audio>' . $set->save_stud_audio . "</save_stud_audio>\n";
             $output .= '        <show_analysis>' . $set->show_analysis . "</show_analysis>\n";
+            $output .= '        <speechtotextlang>' . $set->speechtotextlang . "</speechtotextlang>\n";
             $output .= "     </sassessmentsetting>\n";
         }
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);

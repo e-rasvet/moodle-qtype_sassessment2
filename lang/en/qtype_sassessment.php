@@ -52,6 +52,7 @@ $string['recordAudioIniosapp'] = 'Record Audio for iOS in app';
 $string['targetresponsee'] = 'Target response';
 $string['yourresponse'] = 'Your response';
 $string['scoree'] = 'Score';
+$string['speechtotextlang'] = 'Language';
 
 $string['wordcount'] = 'Total word count';
 $string['worduniquecount'] = 'Total unique words';
@@ -61,6 +62,7 @@ $string['hardwords'] = 'Hard words';
 $string['hardwordspersent'] = 'Hard words %';
 $string['lexicaldensity'] = 'Lexical density';
 $string['fogindex'] = 'Fog index';
+$string['startrecording'] = 'Start recording';
 
 $string['feedback'] = 'Feedback';
 $string['myanswer'] = 'My answer';

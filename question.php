@@ -41,6 +41,13 @@ class qtype_sassessment_question extends question_graded_automatically {
     public $attachments;
     public $filetypeslist = 'html_audio';
 
+    public $correctfeedback;
+    public $correctfeedbackformat;
+    public $partiallycorrectfeedback;
+    public $partiallycorrectfeedbackformat;
+    public $incorrectfeedback;
+    public $incorrectfeedbackformat;
+
     public function get_expected_data() {
         return array(
           'answer' => PARAM_RAW_TRIMMED,
@@ -80,7 +87,10 @@ class qtype_sassessment_question extends question_graded_automatically {
     public function check_file_access($qa, $options, $component, $filearea,
             $args, $forcedownload) {
         // TODO.
-        if ($component == 'question' && $filearea == 'response_attachments') {
+        if ($component == 'question' && in_array($filearea,
+                array('correctfeedback', 'partiallycorrectfeedback', 'incorrectfeedback'))) {
+            return $this->check_combined_feedback_file_access($qa, $options, $filearea, $args);
+        } else if ($component == 'question' && $filearea == 'response_attachments') {
           return true;
         } else if ($component == 'question' && $filearea == 'hint') {
             return $this->check_hint_file_access($qa, $options, $args);

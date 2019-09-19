@@ -10,12 +10,12 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
-      <webServer id="0692a6e7-b1eb-4cce-8782-234b27484c4f" name="fltrk.biz" url="http://fltrc.biz">
-        <fileTransfer host="fltrc.biz" port="2222" privateKey="$USER_HOME$/.ssh/id_rsaNew" accessType="SFTP" keyPair="true">
+      <webServer id="0692a6e7-b1eb-4cce-8782-234b27484c4f" name="fltrk.biz" url="http://vps44784.inmotionhosting.com">
+        <fileTransfer host="vps44784.inmotionhosting.com" port="22" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" />
           </advancedOptions>
-          <option name="port" value="2222" />
+          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>

@@ -40,27 +40,31 @@ class qtype_sassessment_edit_form extends question_edit_form {
     protected function definition_inner($mform) {
         $qtype = question_bank::get_qtype('sassessment');
 
+        $speechtotextlangoptions = array( "en" => "English", "de-DE" => "Deutsch (Deutschland)", "es-ES" => "Español (España)", "fr-FR" => "Français (France)", "it-IT" => "Italiano (Italia)", "ru-RU" => "Русский (Россия)", "ja-JP"=>"日本語（日本)");
+
         $mform->addElement('checkbox', 'show_transcript', get_string('show_transcript', 'qtype_sassessment'));
         $mform->addElement('checkbox', 'save_stud_audio', get_string('save_stud_audio', 'qtype_sassessment'));
         $mform->addElement('checkbox', 'show_analysis', get_string('show_analysis', 'qtype_sassessment'));
+        $mform->addElement('select', 'speechtotextlang', get_string('speechtotextlang', 'qtype_sassessment'), $speechtotextlangoptions);
         //
-        //$mform->addElement('select', 'fb_tyfb_typepe',
-        //         get_string('fb_type', 'qtype_sassessment'), $qtype->feedback_types());
+        $mform->addElement('select', 'fb_tyfb_typepe',
+                 get_string('fb_type', 'qtype_sassessment'), $qtype->feedback_types());
 
         $mform->addElement('hidden', 'fb_type', 0);
 
         $this->add_per_answer_fields($mform, '{no}', question_bank::fraction_options_full(), 1, 3);
 
-        // $this->add_combined_feedback_fields(true);
+        $this->add_combined_feedback_fields(false);
         // $mform->disabledIf('shownumcorrect', 'single', 'eq', 1);
 
-        // $this->add_interactive_settings(true, true);
+        //$this->add_interactive_settings(true, true);
     }
 
     protected function get_per_answer_fields($mform, $label, $gradeoptions,
             &$repeatedoptions, &$answersoption) {
         $repeated = array();
         $repeated[] = $mform->createElement('textarea', 'answer', get_string('comment', 'qtype_sassessment') . ' ' . $label, array('rows' => 3, 'cols' => 65), $this->editoroptions);
+        //$repeated[] = $mform->createElement('textarea', 'feedback', get_string('feedback'), array('rows' => 1, 'cols' => 65), $this->editoroptions);
         // $repeatedoptions['answer']['type'] = PARAM_RAW;
         $answersoption = 'answers';
         return $repeated;
@@ -76,10 +80,13 @@ class qtype_sassessment_edit_form extends question_edit_form {
         $question->show_transcript = $question->options->show_transcript;
         $question->save_stud_audio = $question->options->save_stud_audio;
         $question->show_analysis = $question->options->show_analysis;
+        $question->speechtotextlang = $question->options->speechtotextlang;
 
         $question->fb_type = $question->options->fb_type;
 
         $this->data_preprocessing_answers($question, true);
+
+        $this->data_preprocessing_combined_feedback($question, true);
 
         return $question;
     }
@@ -109,6 +116,7 @@ class qtype_sassessment_edit_form extends question_edit_form {
             unset($this->_form->_defaultValues["fraction[{$key}]"]);
             $key++;
         }
+
     }
 
     public function qtype() {

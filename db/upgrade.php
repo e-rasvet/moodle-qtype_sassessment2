@@ -61,5 +61,55 @@ function xmldb_qtype_sassessment_upgrade($oldversion) {
     //     upgrade_plugin_savepoint(true, NEWVERSION, 'qtype', 'sassessment');
     // }
 
+    if ($oldversion < 2019041800) {
+        $table = new xmldb_table('qtype_sassessment_options');
+
+        $field = new xmldb_field('correctfeedback', XMLDB_TYPE_TEXT, 'small', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('correctfeedbackformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('partiallycorrectfeedback', XMLDB_TYPE_TEXT, 'small', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('partiallycorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('incorrectfeedback', XMLDB_TYPE_TEXT, 'small', null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        $field = new xmldb_field('incorrectfeedbackformat', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2019041800, 'qtype', 'sassessment');
+
+    }
+
+
+    if ($oldversion < 2019091800) {
+        $table = new xmldb_table('qtype_sassessment_options');
+
+        $field = new xmldb_field('speechtotextlang', XMLDB_TYPE_CHAR, '10', null,  XMLDB_NOTNULL, null, 'en', 'incorrectfeedbackformat');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        upgrade_plugin_savepoint(true, 2019091800, 'qtype', 'sassessment');
+    }
+
+
     return true;
 }

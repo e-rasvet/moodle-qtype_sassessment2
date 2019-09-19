@@ -30,4 +30,4 @@ unzip it into the question/type folder, and then rename the new folder to sasses
 
 
 
-@copyright  Paul Daniels, Igor Nikulin, Nobuhiro Kumai
+@copyright  Igor Nikulin, Paul Daniels, Nobuhiro Kumai

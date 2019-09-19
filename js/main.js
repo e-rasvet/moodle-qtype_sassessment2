@@ -10,6 +10,7 @@ var audio_context;
 var recorder;
 var audio_stream;
 var recs = 0;
+var speechLang = 'en';
 
 function uploadFile(file, repo_id, itemid, title, ctx_id, btn) {
   var xhr = new XMLHttpRequest();
@@ -79,6 +80,7 @@ function stopRecording(callback) {
 }
 
 function recBtn(ev) {
+
   var btn = ev.target;
   var id = btn.name;
 
@@ -96,7 +98,7 @@ function recBtn(ev) {
     recStatus[id] = new webkitSpeechRecognition();
     recStatus[id].continuous = true;
     recStatus[id].interimResults = true;
-    recStatus[id].lang = 'en';
+    recStatus[id].lang = speechLang;
     recStatus[id].btn = btn;
     recStatus[id].qid = btn.getAttribute('qid');
     recStatus[id].ans = document.getElementById(btn.getAttribute('answername'));

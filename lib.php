@@ -53,9 +53,11 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   $maxp = 0;
   $maxi = 1;
   $maxtext = "";
+  $allSampleResponses = "";
 
   if ($sampleresponses = $DB->get_records('question_answers', array('question' => $qid))) {
       foreach ($sampleresponses as $k => $sampleresponse) {
+          $allSampleResponses .= $sampleresponse->answer;
           $percent = qtype_sassessment_similar_text($sampleresponse->answer, $ans);
           if ($maxp < $percent) {
               $maxi = $k;
@@ -77,6 +79,11 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
 
   if ($get)
     $result["answer"] = $maxtext;
+
+  if (empty($allSampleResponses)) {
+      $result["gradePercent"] = 100;
+      $result["grade"] = 1;
+  }
 
   return $result;
 }
@@ -185,7 +192,24 @@ function qtype_sassessment_cmp_phon($spoken, $target){
             }
         }
     }
-    $percent=round($score/count($spoken_obj->words)*100);
+
+    /*
+     * New unmached calculation system
+     */
+    foreach($spoken_obj->phonetic as $index=>$word){
+        if(!in_array($word, $target_obj->phonetic)){
+            if(!in_array($spoken_obj->words[$index], $unmatched)){
+                $unmatched[]=$spoken_obj->words[$index];
+            }
+        }
+    }
+    //$percent=round($score/count($spoken_obj->words)*100);  //Old
+    $percent=round(count($matched)/(count($matched)+count($unmatched))*100);  //New
+
+    if (count($spoken_obj->phonetic) == 0) {
+        $percent = 100;
+    }
+
     return array("spoken"=>$spoken_obj,"target"=>$target_obj,"matched"=>$matched,"unmatched"=>$unmatched,"percent"=>$percent);
 }
 

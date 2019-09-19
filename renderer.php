@@ -201,7 +201,7 @@ class qtype_sassessment_renderer extends qtype_renderer {
                 'audioname' => $audioname,
             );
 
-            $btn = html_writer::tag('button', 'Start recording', $btnattributes);
+            $btn = html_writer::tag('button', get_string("startrecording", 'qtype_sassessment'), $btnattributes);
             $audio = html_writer::empty_tag('audio', array('src' => ''));
 
             $result .= html_writer::start_tag('div', array('class' => 'ablock'));
@@ -216,7 +216,7 @@ class qtype_sassessment_renderer extends qtype_renderer {
             $result .= html_writer::end_tag('div');
 
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/recorder.js'));
-            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?5'));
+            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?7'));
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/Mp3LameEncoder.min.js'));
         }
         else {
@@ -254,8 +254,12 @@ class qtype_sassessment_renderer extends qtype_renderer {
 
             $input = html_writer::empty_tag('input', $inputattributes);
 
-            if (!$options->readonly) {
+            if (!$options->readonly && !empty($q->answer)) {
                 $result .= html_writer::start_tag('div', array('class' => 'ablock form-inline'));
+
+                //echo "<pre>";
+                //print_r (qtype_sassessment_cmp_phon("", "how are you how are you"));
+
                 $result .= html_writer::tag('label', get_string('score', 'qtype_sassessment',
                     html_writer::tag('span', $input, array('class' => 'answer'))),
                     array('for' => $inputattributes['id'], 'style'=>$gradeDisplayStatus));
@@ -332,6 +336,10 @@ require(["jquery"], function(min) {
         $PAGE->requires->js_amd_inline('
 require(["jquery"], function(min) {
     $(function() {
+    
+        speechLang = "'.$question->speechtotextlang.'";
+        console.log(\'Spell checking:\' + speechLang);
+    
         $(".goToVideo").click(function() {
             $(".goToVideo").attr("style","");
             var $div = $(this).closest(".qtext");
@@ -364,6 +372,30 @@ require(["jquery"], function(min) {
                 window.latestID = time
                 }
             });
+            
+            /*
+            var btn = document.querySelector(\'button[id^="'.$btnname.'"]\');
+            var timerCount = 0;
+            var btnRecordInt = setInterval(function () {
+                timerCount = timerCount + 1;
+                if (timerCount < 6) {
+                    btn.innerHTML = "Start recording " + (5 - timerCount);
+                }
+                if (timerCount == 6) {
+                    btn.innerHTML = "Start recording";
+                    var bntEv = new Object();
+                    bntEv.target = btn;
+                    recBtn(bntEv);
+                }
+                
+                if (timerCount == 16) {
+                    var bntEv = new Object();
+                    bntEv.target = btn;
+                    recBtn(bntEv);
+                }
+            },1000);
+            */
+            
     });
 });
 ');
@@ -393,6 +425,44 @@ require(["jquery"], function(min) {
         $result = '';
         $result .= html_writer::start_tag('div', array('class' => 'ablock'));
 
+
+        /*
+         * Feed Back report
+         *
+         */
+
+        $state = $qa->get_state();
+
+        if (!$state->is_finished()) {
+            $response = $qa->get_last_qt_data();
+            if (!$qa->get_question()->is_gradable_response($response)) {
+                return '';
+            }
+            list($notused, $state) = $qa->get_question()->grade_response($response);
+        }
+
+        $feedback = '';
+        $field = $state->get_feedback_class() . 'feedback';
+        $format = $state->get_feedback_class() . 'feedbackformat';
+        if ($question->$field) {
+            $feedback .= $question->format_text($question->$field, $question->$format,
+                $qa, 'question', $field, $question->id);
+        }
+
+        if (!empty($feedback)) {
+            $result .= html_writer::tag('p', /*get_string('feedback', 'qtype_sassessment') . ": " .*/ $feedback);
+        }
+
+/*
+        if ($grade['gradePercent'] > 80) {
+            $result .= html_writer::tag('p', get_string('feedback', 'qtype_sassessment') . ": " . $qa->get_question()->correctfeedback);
+        } else if ($grade['gradePercent'] > 30) {
+            $result .= html_writer::tag('p', get_string('feedback', 'qtype_sassessment') . ": " . $qa->get_question()->partiallycorrectfeedback);
+        } else {
+            $result .= html_writer::tag('p', get_string('feedback', 'qtype_sassessment') . ": " . $qa->get_question()->incorrectfeedback);
+        }
+*/
+
         /*
          * No need to show target response
          */
@@ -405,6 +475,8 @@ require(["jquery"], function(min) {
         }
 
         if (!empty($grade['answer']) && !empty($ans)) {
+            $grade['answer'] = str_replace(".", " ", $grade['answer']);
+            $ans = str_replace(".", " ", $ans);
             $from_str = preg_replace('/[^A-Za-z0-9 ]/i', '', strtolower($grade['answer']));
             $to_str = preg_replace('/[^A-Za-z0-9] /i', '', strtolower($ans));
 
@@ -415,7 +487,10 @@ require(["jquery"], function(min) {
             $result .= html_writer::tag('style', "del{color:red;background:#fdd;text-decoration:none}ins{display:none}");
         }
 
-        $result .= html_writer::tag('p', get_string('scoree', 'qtype_sassessment') . ": " . $grade['gradePercent']);
+        if (!empty($grade['answer'])) {
+            $result .= html_writer::tag('p', get_string('scoree', 'qtype_sassessment') . ": " . $grade['gradePercent']);
+        }
+
         $result .= html_writer::end_tag('div');
 
         /*
