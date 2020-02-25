@@ -421,6 +421,7 @@ require(["jquery"], function(min) {
         $question = $qa->get_question();
         $ans = $qa->get_last_qt_var('answer');
         $grade = qtype_sassessment_compare_answer($ans, $qa->get_question()->id);
+        $grade['gradePercent'] = $qa->get_last_qt_var('grade');
 
         $result = '';
         $result .= html_writer::start_tag('div', array('class' => 'ablock'));
