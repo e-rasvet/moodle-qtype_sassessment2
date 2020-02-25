@@ -216,7 +216,7 @@ class qtype_sassessment_renderer extends qtype_renderer {
             $result .= html_writer::end_tag('div');
 
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/recorder.js'));
-            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?7'));
+            $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/main.js?8'));
             $result .= html_writer::script(null, new moodle_url('/question/type/sassessment/js/Mp3LameEncoder.min.js'));
         }
         else {
@@ -477,8 +477,20 @@ require(["jquery"], function(min) {
         if (!empty($grade['answer']) && !empty($ans)) {
             $grade['answer'] = str_replace(".", " ", $grade['answer']);
             $ans = str_replace(".", " ", $ans);
-            $from_str = preg_replace('/[^A-Za-z0-9 ]/i', '', strtolower($grade['answer']));
-            $to_str = preg_replace('/[^A-Za-z0-9] /i', '', strtolower($ans));
+
+            //$from_str = preg_replace('/[^A-Za-z0-9 ]/i', '', strtolower($grade['answer']));  /* Original code: Two different lines!!! " ]" and "] " */
+            //$to_str = preg_replace('/[^A-Za-z0-9] /i', '', strtolower($ans));
+
+            //$from_str = preg_replace('/[^a-zA-Z\s]+/', '', $grade['answer']);
+            $from_str = str_replace(array("!","?",".",","), ' ', $grade['answer']);
+            $from_str = preg_replace('!\s+!', ' ', $from_str);
+            $from_str = trim(strtolower($from_str));
+
+
+            //$to_str = preg_replace('/[^a-zA-Z\s]+/', '', $ans);
+            $to_str = str_replace(array("!","?",".",","), ' ', $ans);
+            $to_str = preg_replace('!\s+!', ' ', $to_str);
+            $to_str = trim(strtolower($to_str));
 
             $diff = new FineDiff($from_str, $to_str, FineDiff::$wordGranularity);
             $rendered_diff = $diff->renderDiffToHTML();

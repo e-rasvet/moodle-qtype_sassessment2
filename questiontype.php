@@ -166,7 +166,14 @@ class qtype_sassessment extends question_type {
                 $question->itemsettings[$key]['show_transcript'] = $format->getpath($setxml, array('#', 'show_transcript', 0, '#'), 0);
                 $question->itemsettings[$key]['save_stud_audio'] = $format->getpath($setxml, array('#', 'save_stud_audio', 0, '#'), 0);
                 $question->itemsettings[$key]['show_analysis'] = $format->getpath($setxml, array('#', 'show_analysis', 0, '#'), 0);
+                $question->itemsettings[$key]['correctfeedback'] = $format->getpath($setxml, array('#', 'correctfeedback', 0, '#'), 0);
+                $question->itemsettings[$key]['correctfeedbackformat'] = $format->getpath($setxml, array('#', 'correctfeedbackformat', 0, '#'), 0);
+                $question->itemsettings[$key]['partiallycorrectfeedback'] = $format->getpath($setxml, array('#', 'partiallycorrectfeedback', 0, '#'), 0);
+                $question->itemsettings[$key]['partiallycorrectfeedbackformat'] = $format->getpath($setxml, array('#', 'partiallycorrectfeedbackformat', 0, '#'), 0);
+                $question->itemsettings[$key]['incorrectfeedback'] = $format->getpath($setxml, array('#', 'incorrectfeedback', 0, '#'), 0);
+                $question->itemsettings[$key]['incorrectfeedbackformat'] = $format->getpath($setxml, array('#', 'incorrectfeedbackformat', 0, '#'), 0);
                 $question->itemsettings[$key]['speechtotextlang'] = $format->getpath($setxml, array('#', 'speechtotextlang', 0, '#'), 0);
+                $question->itemsettings[$key]['fb_type'] = $format->getpath($setxml, array('#', 'fb_type', 0, '#'), 0);
             }
         }
         return $question;
@@ -192,7 +199,14 @@ class qtype_sassessment extends question_type {
             $output .= '        <show_transcript>' . $set->show_transcript . "</show_transcript>\n";
             $output .= '        <save_stud_audio>' . $set->save_stud_audio . "</save_stud_audio>\n";
             $output .= '        <show_analysis>' . $set->show_analysis . "</show_analysis>\n";
+            $output .= '        <correctfeedback>' . $set->correctfeedback . "</correctfeedback>\n";
+            $output .= '        <correctfeedbackformat>' . $set->correctfeedbackformat . "</correctfeedbackformat>\n";
+            $output .= '        <partiallycorrectfeedback>' . $set->partiallycorrectfeedback . "</partiallycorrectfeedback>\n";
+            $output .= '        <partiallycorrectfeedbackformat>' . $set->partiallycorrectfeedbackformat . "</partiallycorrectfeedbackformat>\n";
+            $output .= '        <incorrectfeedback>' . $set->incorrectfeedback . "</incorrectfeedback>\n";
+            $output .= '        <incorrectfeedbackformat>' . $set->incorrectfeedbackformat . "</incorrectfeedbackformat>\n";
             $output .= '        <speechtotextlang>' . $set->speechtotextlang . "</speechtotextlang>\n";
+            $output .= '        <fb_type>' . $set->fb_type . "</fb_type>\n";
             $output .= "     </sassessmentsetting>\n";
         }
         $output .= $format->write_combined_feedback($question->options, $question->id, $question->contextid);

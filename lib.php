@@ -47,6 +47,12 @@ function qtype_sassessment_pluginfile($course, $cm, $context, $filearea, $args, 
     question_pluginfile($course, $context, 'qtype_sassessment', $filearea, $args, $forcedownload, $options);
 }
 
+/**
+ * @param $ans
+ * @param $qid
+ * @param bool $get
+ * @return array
+ */
 function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   global $DB, $CFG;
 
@@ -56,9 +62,12 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   $allSampleResponses = "";
 
   if ($sampleresponses = $DB->get_records('question_answers', array('question' => $qid))) {
+      $questionOptions = $DB->get_records('qtype_sassessment_options', array('questionid' => $qid));
       foreach ($sampleresponses as $k => $sampleresponse) {
           $allSampleResponses .= $sampleresponse->answer;
-          $percent = qtype_sassessment_similar_text($sampleresponse->answer, $ans);
+
+          $percent = qtype_sassessment_similar_text($sampleresponse->answer, $ans, $questionOptions->speechtotextlang);
+
           if ($maxp < $percent) {
               $maxi = $k;
               $maxp = $percent;
@@ -88,12 +97,17 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   return $result;
 }
 
+
 /**
  * @param $text1
  * @param $text2
- * @return mixed
+ * @param string $lang
+ * @return float|mixed
  */
-function qtype_sassessment_similar_text($text1, $text2){
+function qtype_sassessment_similar_text($text1, $text2, $lang = "en"){
+
+    $text1 = strip_tags($text1);
+    $text2 = strip_tags($text2);
 
     $text1 = preg_replace('/[^a-zA-Z\s]+/', '', $text1);
     $text1 = preg_replace('!\s+!', ' ', $text1);
@@ -102,9 +116,20 @@ function qtype_sassessment_similar_text($text1, $text2){
     $text2 = preg_replace('/[^a-zA-Z\s]+/', '', $text2);
     $text2 = preg_replace('!\s+!', ' ', $text2);
 
-    $res = qtype_sassessment_cmp_phon($text1, $text2);
+    $text1 = strtolower($text1);
+    $text2 = strtolower($text2);
 
-    return $res['percent'];
+
+    if ($lang == "en") {
+        $res = qtype_sassessment_cmp_phon($text1, $text2);
+        $percent = $res['percent'];
+    } else {
+        $sim = similar_text($text1, $text2, $percent);
+        $percent = round($percent);
+    }
+
+
+    return $percent;
 }
 
 
