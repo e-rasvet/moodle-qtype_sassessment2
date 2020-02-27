@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="9c0ebe09-95fe-493a-b09e-aeb33328e72e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang/en/qtype_sassessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang/en/qtype_sassessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/renderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/renderer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +34,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -133,6 +136,10 @@
       <workItem from="1582618515033" duration="1821000" />
       <workItem from="1582621203244" duration="1584000" />
       <workItem from="1582635929661" duration="202000" />
+      <workItem from="1582717836583" duration="1358000" />
+      <workItem from="1582727034834" duration="853000" />
+      <workItem from="1582728215398" duration="215000" />
+      <workItem from="1582778480245" duration="1139000" />
     </task>
     <servers />
   </component>
@@ -164,9 +171,9 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="0" y="23" width="1440" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1582620886803" />
-    <state x="386" y="178" width="667" height="486" key="find.popup" timestamp="1582618890523">
+    <state x="386" y="178" width="667" height="486" key="find.popup" timestamp="1582727084383">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="386" y="178" width="667" height="486" key="find.popup/0.23.1440.797@0.23.1440.797" timestamp="1582618890523" />
+    <state x="386" y="178" width="667" height="486" key="find.popup/0.23.1440.797@0.23.1440.797" timestamp="1582727084383" />
   </component>
 </project>

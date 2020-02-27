@@ -66,5 +66,6 @@ $string['startrecording'] = 'Start recording';
 
 $string['feedback'] = 'Feedback';
 $string['myanswer'] = 'My answer';
+$string['teachergraded'] = 'Teacher graded';
 
 

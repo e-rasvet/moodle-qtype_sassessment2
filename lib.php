@@ -57,6 +57,7 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   global $DB, $CFG;
 
   $maxp = 0;
+  $maxpF = 0;
   $maxi = 1;
   $maxtext = "";
   $allSampleResponses = "";
@@ -67,13 +68,18 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
           $allSampleResponses .= $sampleresponse->answer;
 
           $percent = qtype_sassessment_similar_text($sampleresponse->answer, $ans, $questionOptions->speechtotextlang);
+          $percentOrig = qtype_sassessment_similar_text_original($sampleresponse->answer, $ans, $questionOptions->speechtotextlang);
+          $totalPercent = round (($percent + $percentOrig) / 2, 2);
 
-          if ($maxp < $percent) {
+          if ($maxp < $totalPercent) {
               $maxi = $k;
-              $maxp = $percent;
+              $maxp = $totalPercent;
 
-              if ($maxp > 100) {
+              $maxpF = max($percent, $percentOrig);
+
+              if ($maxp > 100 || $maxpF > 100) {
                   $maxp = 100;
+                  $maxpF = 100;
               }
 
               $maxtext = $sampleresponse->answer;
@@ -82,8 +88,8 @@ function qtype_sassessment_compare_answer($ans, $qid, $get = true) {
   }
 
   $result = array(
-    "gradePercent" => round($maxp),
-    "grade" => round($maxp/100, 2),
+    "gradePercent" => round($maxpF),
+    "grade" => round($maxpF/100, 2),
   );
 
   if ($get)
@@ -114,6 +120,38 @@ function qtype_sassessment_similar_text($text1, $text2, $lang = "en"){
 
 
     $text2 = preg_replace('/[^a-zA-Z\s]+/', '', $text2);
+    $text2 = preg_replace('!\s+!', ' ', $text2);
+
+    $text1 = strtolower($text1);
+    $text2 = strtolower($text2);
+
+
+    if ($lang == "en") {
+        $res = qtype_sassessment_cmp_phon($text1, $text2);
+        $percent = $res['percent'];
+    } else {
+        $sim = similar_text($text1, $text2, $percent);
+        $percent = round($percent);
+    }
+
+
+    return $percent;
+}
+
+
+/**
+ * @param $text1
+ * @param $text2
+ * @param string $lang
+ * @return float|mixed
+ */
+function qtype_sassessment_similar_text_original($text1, $text2, $lang = "en"){
+
+    $text1 = strip_tags($text1);
+    $text2 = strip_tags($text2);
+
+    $text1 = preg_replace('!\s+!', ' ', $text1);
+
     $text2 = preg_replace('!\s+!', ' ', $text2);
 
     $text1 = strtolower($text1);
