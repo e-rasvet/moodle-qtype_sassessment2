@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c0ebe09-95fe-493a-b09e-aeb33328e72e" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/backup/moodle2/backup_qtype_sassessment_plugin.class.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backup/moodle2/restore_qtype_sassessment_plugin.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lang/en/qtype_sassessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang/en/qtype_sassessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib.php" beforeDir="false" afterPath="$PROJECT_DIR$/lib.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/renderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/renderer.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,12 +47,12 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/amd/src" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/js" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/amd/src" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -139,7 +139,9 @@
       <workItem from="1582717836583" duration="1358000" />
       <workItem from="1582727034834" duration="853000" />
       <workItem from="1582728215398" duration="215000" />
-      <workItem from="1582778480245" duration="1139000" />
+      <workItem from="1582778480245" duration="1190000" />
+      <workItem from="1582981914775" duration="1426000" />
+      <workItem from="1582984087693" duration="1181000" />
     </task>
     <servers />
   </component>
@@ -171,9 +173,9 @@
       <screen x="0" y="23" width="1440" height="797" />
     </state>
     <state x="0" y="23" width="1440" height="797" key="CommitChangelistDialog2/0.23.1440.797@0.23.1440.797" timestamp="1582620886803" />
-    <state x="386" y="178" width="667" height="486" key="find.popup" timestamp="1582727084383">
+    <state x="386" y="178" width="816" height="550" key="find.popup" timestamp="1582983257193">
       <screen x="0" y="23" width="1440" height="797" />
     </state>
-    <state x="386" y="178" width="667" height="486" key="find.popup/0.23.1440.797@0.23.1440.797" timestamp="1582727084383" />
+    <state x="386" y="178" width="816" height="550" key="find.popup/0.23.1440.797@0.23.1440.797" timestamp="1582983257193" />
   </component>
 </project>
