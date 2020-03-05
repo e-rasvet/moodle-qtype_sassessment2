@@ -91,3 +91,9 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/phpstorm
+.DS_Store
+.idea/deployment.xml
+.idea/modules.xml
+.idea/moodle-qtype_sassessment.iml
+.idea/vcs.xml
+.idea/webServers.xml
