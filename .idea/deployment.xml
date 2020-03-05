@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="fltrk.biz">
+  <component name="PublishConfigData" autoUpload="Always" serverName="fltrc.net">
     <serverData>
+      <paths name="fltrc.net">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/fltrcn5/public_html/moodle/question/type/sassessment" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="fltrk.biz">
         <serverdata>
           <mappings>

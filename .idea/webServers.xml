@@ -18,6 +18,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="ede5c0b1-fb76-4fff-b996-e468efa42ff7" name="fltrc.net" url="http://biz214.inmotionhosting.com">
+        <fileTransfer host="biz214.inmotionhosting.com" port="2222" privateKey="$USER_HOME$/.ssh/id_rsa2020.ppk" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="2222" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>
